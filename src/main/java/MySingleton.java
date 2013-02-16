@@ -114,12 +114,23 @@ public class MySingleton {
         LOGGER.info("SaveChangePostByMergeForNonIsset= " + post);
     }
 
+    public void deletePost(){
+        //delete post for id = 5
+        Post post5 = entityManager.find(Post.class,5);
+        entityManager.remove(post5);
+        //check result of delete
+        List<Post> posts = entityManager.createQuery("select p from Post p order by p.id")
+                .getResultList();
+        for (Post post1 : posts)
+            LOGGER.info("deletePost= " + post1);
+    }
+
     @PostConstruct
     public void PostConstruct() {
         //persist
         generateUsers();
         generatePosts();
-        SaveChangePostByMergeForNonIsset();
+        deletePost();
     }
 
 
