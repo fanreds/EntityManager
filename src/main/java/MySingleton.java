@@ -42,13 +42,23 @@ public class MySingleton {
         LOGGER.info("getIssetPostByFind= " + post2);
 
     }
+    public void UsingGetResultList(){
+
+        //        get all posts for user id = 2 using result list
+        User u2 = entityManager.find(User.class, 2);
+        List<Post> posts = entityManager.createQuery("select p from Post p where p.user = :user")
+                .setParameter("user", u2)
+                .getResultList();
+        for (Post post1 : posts)
+            LOGGER.info("UsingGetResultList= " + post1);
+    }
 
     @PostConstruct
     public void PostConstruct() {
         //persist
         generateUsers();
         generatePosts();
-        getNotIssetPostByFind();
+        UsingGetResultList();
     }
 
 
