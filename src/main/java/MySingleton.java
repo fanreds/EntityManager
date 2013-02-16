@@ -104,12 +104,22 @@ public class MySingleton {
         LOGGER.info("SaveChangePostByMerge= " + post);
     }
 
+    public void SaveChangePostByMergeForNonIsset(){
+        //save changed post content for post id = 30
+        Post post = entityManager.find(Post.class, 30);
+        post.setContent("changed content30");
+        entityManager.merge(post);     //not isset                   EXCEPTION
+        //and check
+        post = entityManager.find(Post.class, 3);
+        LOGGER.info("SaveChangePostByMergeForNonIsset= " + post);
+    }
+
     @PostConstruct
     public void PostConstruct() {
         //persist
         generateUsers();
         generatePosts();
-        SaveChangePostByMerge();
+        SaveChangePostByMergeForNonIsset();
     }
 
 
