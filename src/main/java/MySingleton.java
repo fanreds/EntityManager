@@ -125,12 +125,24 @@ public class MySingleton {
             LOGGER.info("deletePost= " + post1);
     }
 
+    public void deleteNonIssetPost(){
+
+        Post post6 = entityManager.find(Post.class,50);
+        //delete post for id = 5O
+        //entityManager.remove(post6);     //exception
+        //check result of delete
+        List<Post> allposts1 = entityManager.createQuery("select p from Post p order by p.id")
+                .getResultList();
+        for (Post post1 : allposts1)
+            LOGGER.info("getPostsForUser= " + post1);
+    }
+
     @PostConstruct
     public void PostConstruct() {
         //persist
         generateUsers();
         generatePosts();
-        deletePost();
+        deleteNonIssetPost();
     }
 
 
