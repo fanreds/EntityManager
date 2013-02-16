@@ -82,13 +82,26 @@ public class MySingleton {
         LOGGER.info("UsingSingleResultListForMultiResult= " + post);
     }
 
+    public void SaveChangePostByPersist(){
+
+        //save changed post content for post id = 3
+        Post post = entityManager.find(Post.class, 3);
+        post.setContent("changed content3");
+        //post2.setContent("changed content30");
+        entityManager.persist(post);
+        //and check
+        post = entityManager.find(Post.class, 3);
+        LOGGER.info("SaveChangePostByPersist= " + post);
+    }
+
     @PostConstruct
     public void PostConstruct() {
         //persist
         generateUsers();
         generatePosts();
-        UsingSingleResultListForMultiResult();
+        SaveChangePostByPersist();
     }
+
 
 
     public void generatePosts() {
