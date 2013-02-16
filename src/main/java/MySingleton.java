@@ -94,12 +94,22 @@ public class MySingleton {
         LOGGER.info("SaveChangePostByPersist= " + post);
     }
 
+    public void SaveChangePostByMerge(){
+        //save changed post content for post id = 3
+        Post post = entityManager.find(Post.class, 3);
+        post.setContent("changed content3");
+        entityManager.merge(post);
+        //and check
+        post = entityManager.find(Post.class, 3);
+        LOGGER.info("SaveChangePostByMerge= " + post);
+    }
+
     @PostConstruct
     public void PostConstruct() {
         //persist
         generateUsers();
         generatePosts();
-        SaveChangePostByPersist();
+        SaveChangePostByMerge();
     }
 
 
