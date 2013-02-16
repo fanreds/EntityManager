@@ -2,7 +2,6 @@ import pl.itcrowd.tutorials.tutorialEntity.domain.Post;
 import pl.itcrowd.tutorials.tutorialEntity.domain.User;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
@@ -29,20 +28,22 @@ public class MySingleton {
     public MySingleton() {
 
     }
-    public void getIssetPostByFind(){
+
+    public void getIssetPostByFind() {
         //        get post for id = 3 using entity manager.find
         Post post = entityManager.find(Post.class, 3);
         LOGGER.info("getPostById= " + post);
     }
 
-    public void getNotIssetPostByFind(){
+    public void getNotIssetPostByFind() {
 
         //        get post for id = 30 using entity manager.find
         Post post2 = entityManager.find(Post.class, 30);    //not isset
         LOGGER.info("getIssetPostByFind= " + post2);
 
     }
-    public void UsingGetResultList(){
+
+    public void UsingGetResultList() {
 
         //        get all posts for user id = 2 using result list
         User u2 = entityManager.find(User.class, 2);
@@ -53,7 +54,7 @@ public class MySingleton {
             LOGGER.info("UsingGetResultList= " + post1);
     }
 
-    public void UsingGetResultListForUnIssetPost(){
+    public void UsingGetResultListForUnIssetPost() {
 
         //        get all posts for user id = 5 using result list
         User u5 = entityManager.find(User.class, 5);          //not isset
@@ -63,7 +64,8 @@ public class MySingleton {
         for (Post post1 : posts)
             LOGGER.info("UsingGetResultListForUnIssetPost= " + post1);
     }
-    public void UsingSingleResultList(){
+
+    public void UsingSingleResultList() {
 
         //get count all posts for u2
         User u2 = entityManager.find(User.class, 2);
@@ -74,17 +76,22 @@ public class MySingleton {
         LOGGER.info("UsingSingleResultList= " + count);
     }
 
+    public void UsingSingleResultListForMultiResult() {
+
+        Post post = (Post) entityManager.createQuery("select p from Post p").getSingleResult(); //exception
+        LOGGER.info("UsingSingleResultListForMultiResult= " + post);
+    }
+
     @PostConstruct
     public void PostConstruct() {
         //persist
         generateUsers();
         generatePosts();
-        UsingSingleResultList();
+        UsingSingleResultListForMultiResult();
     }
 
 
     public void generatePosts() {
-
 
 
         final List<User> users = entityManager.createQuery("select u from User u order by u.id")
