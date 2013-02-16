@@ -29,7 +29,11 @@ public class MySingleton {
     public MySingleton() {
 
     }
-
+    public void getIssetPostByFind(){
+        //        get post for id = 3 using entity manager.find
+        Post post = entityManager.find(Post.class, 3);
+        LOGGER.info("getPostById= " + post);
+    }
 
 
     @PostConstruct
@@ -37,6 +41,7 @@ public class MySingleton {
         //persist
         generateUsers();
         generatePosts();
+        getIssetPostByFind();
     }
 
 
