@@ -53,12 +53,23 @@ public class MySingleton {
             LOGGER.info("UsingGetResultList= " + post1);
     }
 
+    public void UsingGetResultListForUnIssetPost(){
+
+        //        get all posts for user id = 5 using result list
+        User u5 = entityManager.find(User.class, 5);          //not isset
+        List<Post> posts = entityManager.createQuery("select p from Post p where p.user = :user")
+                .setParameter("user", u5)
+                .getResultList();
+        for (Post post1 : posts)
+            LOGGER.info("UsingGetResultListForUnIssetPost= " + post1);
+    }
+
     @PostConstruct
     public void PostConstruct() {
         //persist
         generateUsers();
         generatePosts();
-        UsingGetResultList();
+        UsingGetResultListForUnIssetPost();
     }
 
 
