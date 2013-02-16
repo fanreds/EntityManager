@@ -63,13 +63,23 @@ public class MySingleton {
         for (Post post1 : posts)
             LOGGER.info("UsingGetResultListForUnIssetPost= " + post1);
     }
+    public void UsingSingleResultList(){
+
+        //get count all posts for u2
+        User u2 = entityManager.find(User.class, 2);
+        Long count = (Long) entityManager.createQuery("select count(*) from Post p where p.user = :user")
+                .setParameter("user", u2)
+                .getSingleResult();
+
+        LOGGER.info("UsingSingleResultList= " + count);
+    }
 
     @PostConstruct
     public void PostConstruct() {
         //persist
         generateUsers();
         generatePosts();
-        UsingGetResultListForUnIssetPost();
+        UsingSingleResultList();
     }
 
 
