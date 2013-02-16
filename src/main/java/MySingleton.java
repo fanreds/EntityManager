@@ -35,13 +35,20 @@ public class MySingleton {
         LOGGER.info("getPostById= " + post);
     }
 
+    public void getNotIssetPostByFind(){
+
+        //        get post for id = 30 using entity manager.find
+        Post post2 = entityManager.find(Post.class, 30);    //not isset
+        LOGGER.info("getIssetPostByFind= " + post2);
+
+    }
 
     @PostConstruct
     public void PostConstruct() {
         //persist
         generateUsers();
         generatePosts();
-        getIssetPostByFind();
+        getNotIssetPostByFind();
     }
 
 
